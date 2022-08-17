@@ -1,0 +1,19 @@
+{
+  "name": "flickr-gallery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dementors-sara/flickr-gallery.git"
+  },
+  "author": "Sara Bäckman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dementors-sara/flickr-gallery/issues"
+  },
+  "homepage": "https://github.com/dementors-sara/flickr-gallery#readme"
+}
