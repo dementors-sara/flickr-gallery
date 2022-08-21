@@ -8,6 +8,18 @@
 </head>
 <body style="margin: 0">
 <script type="module" src="index.js"></script>
+<button id="fetch-images" onclick="fetchImageData()">Fetch images</button>
+<script type="text/javascript">
+    function takeData(val) {
+        return val.slice(1, 11);
+    }
+
+    function fetchImageData() {
+        fetch("http://127.0.0.1:3000/get-photos")
+            .then((response) => response.json())
+            .then((json) => takeData(json));
+    }
+</script>
 <div id="app"></div>
 </body>
 </html>

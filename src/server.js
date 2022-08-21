@@ -7,6 +7,7 @@ const app = express();
 let port = 3000;
 
 app.use(express.static('dist'));
+///TODO: Add default route
 
 app.use('/lookup-gallery', async (req, res) => {
   const data = {
@@ -25,7 +26,7 @@ app.use('/lookup-gallery', async (req, res) => {
   }
 });
 
-app.use('/get-photos', async (req, res, next) => {
+app.use('/get-photos', async (req, res) => {
   const data = {
     method: 'flickr.galleries.getPhotos',
     gallery_id: '196294182-72157720979920508',
