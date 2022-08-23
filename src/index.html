@@ -12,10 +12,6 @@
 <ul id="flickr-images"></ul>
 <script type="text/javascript">
 
-    function takeData(val) {
-        return val.slice(1, 11);
-    }
-
     function showImages() {
         fetch("http://127.0.0.1:3000/get-photos")
             .then((response) => response.json())
