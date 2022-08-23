@@ -1,13 +1,16 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const axios = require('axios');
+const fetch = require('node-fetch');
 
 dotenv.config();
 const app = express();
 let port = 3000;
 
+//TODO: Do not do this
+let galleryId;
+
 app.use(express.static('dist'));
-///TODO: Add default route
+//TODO: Add default route
 
 app.use('/lookup-gallery', async (req, res) => {
   const data = {
@@ -17,27 +20,36 @@ app.use('/lookup-gallery', async (req, res) => {
   };
 
   const parameters = new URLSearchParams(data);
-  const url = `https://api.flickr.com/services/rest/?${parameters}`;
+  const url = `https://api.flickr.com/services/rest/?${parameters}&format=json&nojsoncallback=1`;
   try {
-    const response = await axios.get(url);
-    res.json(response.data);
-  } catch (err) {
-    console.log('ERROR', err);
+    fetch(url, { method: 'GET' })
+      .then((resp) => resp.json())
+      .then((json) => {
+        galleryId = json.gallery.id;
+        return res.json(json);
+      });
+  } catch (e) {
+    console.error('ERROR', e);
   }
 });
 
-app.use('/get-photos', async (req, res) => {
-  const data = {
-    method: 'flickr.galleries.getPhotos',
-    gallery_id: '196294182-72157720979920508',
-    api_key: process.env.FLICKR_API_KEY,
-  };
-
-  const parameters = new URLSearchParams(data);
-  const url = `https://api.flickr.com/services/rest/?${parameters}`;
+//TODO: Endpoint for single image (get-photos/:imageId)
+app.use('/get-photos', (req, res) => {
   try {
-    const response = await axios.get(url);
-    res.json(response.data);
+    fetch('http://127.0.0.1:3000/lookup-gallery').then((json) => {
+      const data = {
+        method: 'flickr.galleries.getPhotos',
+        gallery_id: galleryId,
+        api_key: process.env.FLICKR_API_KEY,
+      };
+
+      const parameters = new URLSearchParams(data);
+      const url = `https://api.flickr.com/services/rest/?${parameters}&format=json&nojsoncallback=1`;
+
+      fetch(url, { method: 'GET' })
+        .then((resp) => resp.json())
+        .then((json) => res.json(json));
+    });
   } catch (err) {
     console.log('ERROR', err);
   }
