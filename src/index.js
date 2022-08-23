@@ -1,4 +1,21 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
+function showImages() {
+  fetch('http://127.0.0.1:3000/get-photos')
+    .then((response) => response.json())
+    .then((json) => {
+      let imageUrls = json.photos.photo.map((photo) => createImageUrl(photo));
+      let output;
+      imageUrls.forEach((url) => {
+        output += `
+                      <ul>
+                          <li><img src="${url}"></li>
+                      </ul> `;
+      });
 
-ReactDOM.render(<h1>HELLO</h1>, document.getElementById('app'));
+      document.getElementById('flickr-images').innerHTML = output;
+      return json;
+    });
+}
+
+function createImageUrl(item) {
+  return `http://farm${item.farm}.static.flickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`;
+}

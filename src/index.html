@@ -5,38 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Flickr Gallery</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body style="margin: 0">
-<script type="module" src="index.js"></script>
+<div id="app"></div>
+<script type="text/javascript" src="index.js"></script>
 <button id="show-images" onclick="showImages()">Show images</button>
 <ul id="flickr-images"></ul>
-<script type="text/javascript">
-
-    function showImages() {
-        fetch("http://127.0.0.1:3000/get-photos")
-            .then((response) => response.json())
-            .then((json) => {
-                let imageUrls = json.photos.photo.map((photo) => createImageUrl(photo))
-                console.log("imageUrls", imageUrls);
-                let output;
-                imageUrls.forEach((url) => {
-                    output += `
-                      <ul>
-                          <li><img src="${url}"></li>
-                      </ul> `
-                })
-
-                document.getElementById('flickr-images').innerHTML = output;
-                return json;
-            })
-    }
-
-    function createImageUrl(item) {
-        return `http://farm${item.farm}.static.flickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`;
-    }
-
-
-</script>
-<div id="app"></div>
 </body>
 </html>
