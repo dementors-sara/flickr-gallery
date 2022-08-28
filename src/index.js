@@ -13,15 +13,12 @@ function showImages() {
     .then((response) => response.json())
     .then((json) => {
       let imageUrls = json.photos.photo.map((photo) => createImageUrl(photo));
-      let output;
-      imageUrls.forEach((url) => {
-        output += `
-                      <ul>
-                          <li><img src="${url}"></li>
-                      </ul> `;
-      });
 
-      document.getElementById('flickr-images').innerHTML = output;
+      imageUrls.forEach((url) => {
+        let imageElement = document.createElement('img');
+        imageElement.setAttribute('src', url);
+        document.getElementById('flex-cont').appendChild(imageElement);
+      });
       return json;
     })
     .then(() => {
