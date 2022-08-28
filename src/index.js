@@ -1,5 +1,9 @@
 const IMAGE_FETCH_TIMEOUT = 3_000;
 
+window.onload = (event) => {
+  showImages();
+};
+
 function showImages() {
   let timer = setTimeout(() => {
     console.error('Unable to fetch images data');
