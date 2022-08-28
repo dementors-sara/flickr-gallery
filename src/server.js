@@ -48,7 +48,9 @@ app.use('/get-photos', (req, res) => {
 
       fetch(url, { method: 'GET' })
         .then((resp) => resp.json())
-        .then((json) => res.json(json));
+        .then((json) => {
+          return res.json(json);
+        });
     });
   } catch (err) {
     console.log('ERROR', err);

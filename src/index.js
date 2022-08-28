@@ -1,4 +1,10 @@
+const IMAGE_FETCH_TIMEOUT = 3_000;
+
 function showImages() {
+  let timer = setTimeout(() => {
+    console.error('Unable to fetch images data');
+  }, IMAGE_FETCH_TIMEOUT);
+
   fetch('http://127.0.0.1:3000/get-photos')
     .then((response) => response.json())
     .then((json) => {
@@ -13,6 +19,9 @@ function showImages() {
 
       document.getElementById('flickr-images').innerHTML = output;
       return json;
+    })
+    .then(() => {
+      clearTimeout(timer);
     });
 }
 
